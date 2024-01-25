@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { error } from 'console';
 
-@Injectable({
+@Injectable({  
   providedIn: 'root'
 })
 export class AuthService {
