@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) { }
 
   faLock = faLock;
-
+  errormsg: string | undefined;
   loginForm = new FormGroup({
     email: new FormControl(''),
     password: new FormControl('')
@@ -30,17 +30,25 @@ export class LoginComponent implements OnInit {
     if (this.authService.isLoggedIn()) {
       this.router.navigate(['admin']);
     }
+
   }
   onSubmit() {
     if (this.loginForm.valid) {
-      this.authService.login(this.loginForm.value).subscribe(
-        (result) => {
-          this.router.navigate(['admin']);
+      this.authService.login(this.loginForm.value).subscribe({
+        next: (value: any) => {
+          if (value.email === 'admin@gmail.com') {
+            this.router.navigate(['admin']);
+            console.log(value);
+          }
+          else {
+            console.log(value);
+            this.errormsg = value.errormessage
+          }
         },
-        (err: Error) => { alert(err.message) }
-      )
+
+      })
+
     }
 
   }
-
 }
